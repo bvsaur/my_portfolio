@@ -36,7 +36,7 @@ const Layout = ({ title, children }: Props) => {
           <i className="fa-solid fa-arrow-down ml-3 animate-bounce"></i>
         </button>
         <a
-          href="mail:brunoveranoc@gmail.com"
+          href="mailto:brunoveranoc@gmail.com"
           className="cursor-pointer rounded-md bg-gray-200 py-3 px-4 transition-colors hover:bg-gray-300"
         >
           <i className="fa-solid fa-envelope"></i>
