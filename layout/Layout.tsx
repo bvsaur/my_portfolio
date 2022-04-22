@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import Head from 'next/head'
 import LinkButton from '../components/LinkButton'
 import SocialLink from '../components/SocialLink'
+import Image from 'next/image'
 
 interface Props {
   title: string
@@ -15,11 +16,11 @@ const Layout = ({ title, children }: Props) => {
         <title>{title} | Bruno Verano</title>
       </Head>
 
-      <img
-        src="/img/me.jpg"
-        alt="My Picture"
-        className="mx-auto h-36 w-36 cursor-pointer rounded-full border-4 border-sky-500 p-1"
-      />
+      <div className="inline-block rounded-full border-4 border-sky-500">
+        <div className="mx-auto h-36 w-36 overflow-hidden rounded-full border-4 border-white">
+          <Image src="/img/me.jpg" width={200} height={200} />
+        </div>
+      </div>
 
       <div className="my-5">
         <h1 className="text-3xl font-bold">Bruno Verano</h1>
