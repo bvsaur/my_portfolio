@@ -1,3 +1,11 @@
 import { createContext } from 'react'
+import { ProjectState } from '../interfaces'
 
-export const ProjectContext = createContext({})
+export type ProjectContextProps = {
+  state: ProjectState
+  getProjects: () => void
+}
+
+export const ProjectContext = createContext<ProjectContextProps>(
+  {} as ProjectContextProps
+)
