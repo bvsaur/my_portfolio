@@ -4,7 +4,7 @@ type ProjectActions =
   | { type: 'getProjects'; payload: Project[] }
   | { type: 'error'; payload: string }
 
-export const TodoREducer = (
+export const ProjectReducer = (
   state: ProjectState,
   action: ProjectActions
 ): ProjectState => {

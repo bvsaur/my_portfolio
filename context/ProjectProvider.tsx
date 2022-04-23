@@ -1,8 +1,7 @@
 import { useReducer } from 'react'
 import { ProjectState, Project } from '../interfaces'
 import { ProjectContext } from './ProjectContext'
-import { TodoREducer } from './ProjectReducer'
-
+import { ProjectReducer } from './ProjectReducer'
 import axiosClient from '../libs/axios'
 import { AxiosResponse } from 'axios'
 
@@ -16,7 +15,7 @@ interface Props {
 }
 
 export const ProjectProvider = ({ children }: Props) => {
-  const [state, dispatch] = useReducer(TodoREducer, INITIAL_STATE)
+  const [state, dispatch] = useReducer(ProjectReducer, INITIAL_STATE)
 
   const getProjects = async () => {
     try {

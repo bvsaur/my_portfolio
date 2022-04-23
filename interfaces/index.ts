@@ -19,3 +19,16 @@ export interface ProjectState {
   projects: Project[]
   errorMsg: string
 }
+
+export interface Skill {
+  id: number
+  attributes: {
+    name: string
+    level: string
+  }
+}
+
+export interface SkillState {
+  skills: Skill[]
+  errorMsg: string
+}

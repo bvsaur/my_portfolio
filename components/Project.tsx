@@ -30,7 +30,9 @@ const Project = ({ project }: Props) => {
           target="_blank"
           rel="noreferrer noopener"
         >
-          <i className="fa-brands fa-github absolute right-4 top-4 animate-pulse text-3xl text-white"></i>
+          <i
+            className={`fa-brands fa-${project.attributes.provider.toLowerCase()} absolute right-4 top-4 animate-pulse text-3xl text-white`}
+          ></i>
         </a>
 
         <a
