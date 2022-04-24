@@ -9,7 +9,7 @@ const Home = () => {
   const { projects, errorMsg } = state
 
   useEffect(() => {
-    if (projects.length === 0) {
+    if (projects.length === 0 && !errorMsg) {
       getProjects()
     }
   }, [projects])

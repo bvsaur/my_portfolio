@@ -3,6 +3,7 @@ import Head from 'next/head'
 import LinkButton from '../components/LinkButton'
 import SocialLink from '../components/SocialLink'
 import Image from 'next/image'
+import CVButton from '../components/CVButton'
 
 interface Props {
   title: string
@@ -31,18 +32,8 @@ const Layout = ({ title, children }: Props) => {
         <SocialLink network="github" />
         <SocialLink network="gitlab" />
       </div>
-      <div className="my-5 flex items-center justify-center space-x-7">
-        <button className="rounded-md bg-sky-400 px-4 py-3 font-medium text-white shadow-lg transition-all hover:bg-sky-500 hover:shadow-xl">
-          Download CV
-          <i className="fa-solid fa-arrow-down ml-3 animate-bounce"></i>
-        </button>
-        <a
-          href="mailto:brunoveranoc@gmail.com"
-          className="cursor-pointer rounded-md bg-gray-200 py-3 px-4 transition-colors hover:bg-gray-300"
-        >
-          <i className="fa-solid fa-envelope"></i>
-        </a>
-      </div>
+
+      <CVButton />
 
       <div className="mx-auto my-5 inline-block space-x-2 rounded-xl bg-gray-200 p-2">
         <LinkButton text="Projects" href="/" />

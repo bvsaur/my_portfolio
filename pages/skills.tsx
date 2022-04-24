@@ -10,7 +10,7 @@ const Skills = () => {
   const { skills, errorMsg } = state
 
   useEffect(() => {
-    if (skills.length === 0) {
+    if (skills.length === 0 && !errorMsg) {
       getSkills()
     }
   }, [skills])
@@ -20,6 +20,11 @@ const Skills = () => {
       <div>
         <div>
           <h2 className="mb-7 text-2xl font-bold">My Skills</h2>
+
+          {errorMsg && (
+            <p className="mb-5 text-2xl font-bold text-red-500">{errorMsg}</p>
+          )}
+
           <div className="mx-auto grid grid-cols-2 gap-5 px-5 md:grid-cols-3 md:px-10 xl:w-1/2">
             {skills.length === 0
               ? Array(6)
