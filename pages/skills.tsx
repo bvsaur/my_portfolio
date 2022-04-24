@@ -1,41 +1,53 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
+import Skill from '../components/Skill'
+import { client } from '../libs/sanity'
+import { IResume, ISkill } from '../interfaces'
 import Layout from '../layout/Layout'
 
-import { SkillContext } from '../context/SkillContext'
-import Skill from '../components/Skill'
-import SkillSkeleton from '../components/SkillSkeleton'
+interface Props {
+  skills: ISkill[]
+  resume: IResume
+}
 
-const Skills = () => {
-  const { state, getSkills } = useContext(SkillContext)
-  const { skills, errorMsg } = state
-
-  useEffect(() => {
-    if (skills.length === 0 && !errorMsg) {
-      getSkills()
-    }
-  }, [skills])
-
+const Skills = ({ skills, resume }: Props) => {
   return (
-    <Layout title="My Skills">
+    <Layout title="Skills" resume={resume}>
       <div>
         <div>
           <h2 className="mb-7 text-2xl font-bold">My Skills</h2>
-
-          {errorMsg && (
-            <p className="mb-5 text-2xl font-bold text-red-500">{errorMsg}</p>
-          )}
-
           <div className="mx-auto grid grid-cols-2 gap-5 px-5 md:grid-cols-3 md:px-10 xl:w-1/2">
-            {skills.length === 0
-              ? Array(6)
-                  .fill(0)
-                  .map((v, i) => <SkillSkeleton key={i} />)
-              : skills.map((skill) => <Skill skill={skill} key={skill.id} />)}
+            {skills.map((skill) => (
+              <Skill skill={skill} key={skill._id} />
+            ))}
           </div>
         </div>
       </div>
     </Layout>
   )
+}
+
+export const getServerSideProps = async () => {
+  let querySkill = `*[_type == "skill"] {
+    _id,
+    name,
+    level
+  }`
+
+  let queryResume = `*[_type == "resume"] {
+    "url": file.asset->url
+  }`
+
+  const [skills, resume] = await Promise.all([
+    client.fetch(querySkill),
+    client.fetch(queryResume),
+  ])
+
+  return {
+    props: {
+      skills,
+      resume: resume[0],
+    },
+  }
 }
 
 export default Skills

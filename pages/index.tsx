@@ -1,35 +1,51 @@
-import { useContext, useEffect } from 'react'
 import Project from '../components/Project'
-import ProjectSkeleton from '../components/ProjectSkeleton'
-import { ProjectContext } from '../context/ProjectContext'
+import { IProject, IResume } from '../interfaces'
 import Layout from '../layout/Layout'
 
-const Home = () => {
-  const { state, getProjects } = useContext(ProjectContext)
-  const { projects, errorMsg } = state
+import { client } from '../libs/sanity'
 
-  useEffect(() => {
-    if (projects.length === 0 && !errorMsg) {
-      getProjects()
-    }
-  }, [projects])
+interface Props {
+  projects: IProject[]
+  resume: IResume
+}
 
+const Home = ({ projects, resume }: Props) => {
   return (
-    <Layout title="My Projects">
-      {errorMsg && (
-        <p className="mb-5 text-2xl font-bold text-red-500">{errorMsg}</p>
-      )}
+    <Layout title="Projects" resume={resume}>
       <div className="mx-auto grid w-full grid-cols-1 gap-7 px-7 md:grid-cols-2 lg:w-2/3 lg:grid-cols-2 lg:gap-10 lg:px-0 xl:w-1/2 xl:gap-14">
-        {projects.length === 0
-          ? Array(4)
-              .fill(0)
-              .map((v, i) => <ProjectSkeleton key={i} />)
-          : projects.map((project) => (
-              <Project project={project} key={project.id} />
-            ))}
+        {projects.map((project) => (
+          <Project project={project} key={project._id} />
+        ))}
       </div>
     </Layout>
   )
+}
+
+export const getServerSideProps = async () => {
+  let queryProjects = `*[_type == "project"] {
+    _id,
+    image,
+    name,
+    provider,
+    repoURL,
+    siteURL
+  }`
+
+  let queryResume = `*[_type == "resume"] {
+    "url": file.asset->url
+  }`
+
+  const [projects, resume] = await Promise.all([
+    client.fetch(queryProjects),
+    client.fetch(queryResume),
+  ])
+
+  return {
+    props: {
+      projects,
+      resume: resume[0],
+    },
+  }
 }
 
 export default Home

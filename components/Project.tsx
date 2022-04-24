@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import { useState } from 'react'
-import { Project } from '../interfaces'
+import { IProject } from '../interfaces'
+import { urlFor } from '../libs/sanity'
 
 interface Props {
-  project: Project
+  project: IProject
 }
 
-const Project = ({ project }: Props) => {
+const Project = ({
+  project: { name, provider, image, siteURL, repoURL },
+}: Props) => {
   const [show, setShow] = useState(false)
   return (
     <div
@@ -15,7 +18,7 @@ const Project = ({ project }: Props) => {
       onMouseLeave={() => setShow(false)}
     >
       <Image
-        src={project.attributes.image.data.attributes.url}
+        src={urlFor(image).url()}
         layout="fill"
         objectFit="scale-down"
         objectPosition="center"
@@ -25,23 +28,19 @@ const Project = ({ project }: Props) => {
           !show && 'hidden'
         } absolute flex h-full w-full items-center justify-center bg-sky-500 bg-opacity-0 transition-colors duration-150 ease-in-out hover:bg-opacity-70`}
       >
-        <a
-          href={project.attributes.repoURL}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
+        <a href={repoURL} target="_blank" rel="noreferrer noopener">
           <i
-            className={`fa-brands fa-${project.attributes.provider.toLowerCase()} absolute right-4 top-4 animate-pulse text-3xl text-white`}
+            className={`fa-brands fa-${provider} absolute right-4 top-4 animate-pulse text-3xl text-white`}
           ></i>
         </a>
 
         <a
-          href={project.attributes.siteURL}
+          href={siteURL}
           target="_blank"
           rel="noreferrer noopener"
           className="select-none break-all text-3xl font-bold uppercase text-white"
         >
-          {project.attributes.name}
+          {name}
         </a>
       </div>
     </div>

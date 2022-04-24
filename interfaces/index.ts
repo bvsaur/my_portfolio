@@ -32,3 +32,28 @@ export interface SkillState {
   skills: Skill[]
   errorMsg: string
 }
+
+export interface IProject {
+  _id: string
+  name: string
+  provider: 'github' | 'gitlab'
+  repoURL: string
+  siteURL: string
+  image: IImage
+}
+
+export interface IImage {
+  asset: {
+    _ref: string
+  }
+}
+
+export interface ISkill {
+  _id: string
+  name: string
+  level: string
+}
+
+export interface IResume {
+  url: string
+}

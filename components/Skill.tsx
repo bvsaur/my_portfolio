@@ -1,16 +1,16 @@
-import { Skill } from '../interfaces'
+import { ISkill } from '../interfaces'
 
 interface Props {
-  skill: Skill
+  skill: ISkill
 }
 
-const Skill = ({ skill }: Props) => {
+const Skill = ({ skill: { name, level } }: Props) => {
   return (
     <div className="flex items-center">
       <i className="fa-solid fa-check text-2xl text-sky-500"></i>
       <div className="ml-4 text-left">
-        <p className="font-bold">{skill.attributes.name}</p>
-        <span className="font-light">{skill.attributes.level}</span>
+        <p className="font-bold">{name}</p>
+        <span className="font-light">{level}</span>
       </div>
     </div>
   )

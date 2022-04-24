@@ -1,16 +1,17 @@
-import { ReactNode } from 'react'
 import Head from 'next/head'
 import LinkButton from '../components/LinkButton'
 import SocialLink from '../components/SocialLink'
 import Image from 'next/image'
-import CVButton from '../components/CVButton'
+import CVandMailButton from '../components/CVandMailButton'
+import { IResume } from '../interfaces'
 
 interface Props {
   title: string
-  children: ReactNode
+  children: JSX.Element | JSX.Element[]
+  resume: IResume
 }
 
-const Layout = ({ title, children }: Props) => {
+const Layout = ({ title, children, resume }: Props) => {
   return (
     <div className="py-10 text-center">
       <Head>
@@ -33,7 +34,7 @@ const Layout = ({ title, children }: Props) => {
         <SocialLink network="gitlab" />
       </div>
 
-      <CVButton />
+      <CVandMailButton resume={resume} />
 
       <div className="mx-auto my-5 inline-block space-x-2 rounded-xl bg-gray-200 p-2">
         <LinkButton text="Projects" href="/" />
