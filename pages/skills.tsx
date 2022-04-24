@@ -1,29 +1,53 @@
 import React from 'react'
+import Skill from '../components/Skill'
+import { client } from '../libs/sanity'
+import { IResume, ISkill } from '../interfaces'
 import Layout from '../layout/Layout'
 
-import { SKILLS } from '../data/skills'
+interface Props {
+  skills: ISkill[]
+  resume: IResume
+}
 
-const Skills = () => {
+const Skills = ({ skills, resume }: Props) => {
   return (
-    <Layout title="My Skills">
+    <Layout title="Skills" resume={resume}>
       <div>
         <div>
           <h2 className="mb-7 text-2xl font-bold">My Skills</h2>
           <div className="mx-auto grid grid-cols-2 gap-5 px-5 md:grid-cols-3 md:px-10 xl:w-1/2">
-            {SKILLS.map((skill) => (
-              <div className="flex items-center" key={skill.name}>
-                <i className="fa-solid fa-check text-2xl text-sky-500"></i>
-                <div className="ml-4 text-left" key={skill.name}>
-                  <p className="font-bold">{skill.name}</p>
-                  <span className="font-light">{skill.level}</span>
-                </div>
-              </div>
+            {skills.map((skill) => (
+              <Skill skill={skill} key={skill._id} />
             ))}
           </div>
         </div>
       </div>
     </Layout>
   )
+}
+
+export const getServerSideProps = async () => {
+  let querySkill = `*[_type == "skill"] {
+    _id,
+    name,
+    level
+  }`
+
+  let queryResume = `*[_type == "resume"] {
+    "url": file.asset->url
+  }`
+
+  const [skills, resume] = await Promise.all([
+    client.fetch(querySkill),
+    client.fetch(queryResume),
+  ])
+
+  return {
+    props: {
+      skills,
+      resume: resume[0],
+    },
+  }
 }
 
 export default Skills
