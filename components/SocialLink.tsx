@@ -1,9 +1,9 @@
 const SOCIALS = {
   github: {
-    url: 'https://github.com/bveranoc',
+    url: 'https://github.com/bvsaur',
   },
   gitlab: {
-    url: 'https://gitlab.com/brunoverano',
+    url: 'https://gitlab.com/bvsaur',
   },
   linkedin: {
     url: 'https://www.linkedin.com/in/bveranoc/',
